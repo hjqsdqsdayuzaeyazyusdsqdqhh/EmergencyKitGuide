@@ -1,9 +1,9 @@
-var SITE = {
+﻿var SITE = {
   name: 'EmergencyKitGuide',
-  url: 'https://emergencykitguide.com',
+  url: 'https://emergencykithq.online',
   email: 'adimozada463@gmail.com',
   organization: 'EmergencyKitGuide',
-  copyright: '© ' + new Date().getFullYear() + ' EmergencyKitGuide. All rights reserved.',
+  copyright: 'Â© ' + new Date().getFullYear() + ' EmergencyKitGuide. All rights reserved.',
   social: {
     twitter: 'https://twitter.com/emergencykitguide',
     facebook: 'https://facebook.com/emergencykitguide',
