@@ -310,15 +310,15 @@
         { title: 'First Aid Guide', desc: 'Medical emergency response basics', url: '/guides/first-aid', category: 'Guides', icon: 'ðŸ©¹' },
         { title: 'Natural Disaster Prep', desc: 'Hurricanes, earthquakes, and floods', url: '/guides/natural-disasters', category: 'Guides', icon: 'âš ' },
         { title: 'Emergency Checklists', desc: 'Interactive checklist generator', url: '/checklists', category: 'Tools', icon: 'âœ“' },
-        { title: 'Emergency FAQs', desc: 'Answers to common preparedness questions', url: '/faqs', category: 'FAQs', icon: '?' },
+        { title: 'Emergency FAQs', desc: 'Answers to common preparedness questions', url: '/faq/', category: 'FAQs', icon: '?' },
         { title: 'Winter Emergency Kit', desc: 'Cold weather survival essentials', url: '/guides/winter-kit', category: 'Guides', icon: 'â„' },
         { title: 'Bug-Out Bag Guide', desc: 'Build the ultimate grab-and-go bag', url: '/guides/bug-out-bag', category: 'Guides', icon: 'ðŸŽ’' }
       ];
 
       var faqSearchData = [
-        { title: 'How many emergency kits should I have?', desc: 'Expert answer', url: '/faqs', category: 'FAQs' },
-        { title: 'How often should I update my emergency kit?', desc: 'Expert answer', url: '/faqs', category: 'FAQs' },
-        { title: 'What is the most important emergency item?', desc: 'Expert answer', url: '/faqs', category: 'FAQs' }
+        { title: 'How many emergency kits should I have?', desc: 'Expert answer', url: '/faq/', category: 'FAQs' },
+        { title: 'How often should I update my emergency kit?', desc: 'Expert answer', url: '/faq/', category: 'FAQs' },
+        { title: 'What is the most important emergency item?', desc: 'Expert answer', url: '/faq/', category: 'FAQs' }
       ];
 
       function openSearch() {
