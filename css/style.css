@@ -3733,6 +3733,89 @@
     }
 
     /* ========================================
+       PHASE 7C: PREV/NEXT NAVIGATION
+       ======================================== */
+    .prev-next-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 48px 0;
+    }
+
+    .prev-next-link {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+
+    .prev-next-link:hover {
+      border-color: var(--red);
+      box-shadow: var(--shadow-md);
+    }
+
+    .prev-next-link.next {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    .prev-next-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--slate-light);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .prev-next-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .prev-next-link:hover .prev-next-title {
+      color: var(--red);
+    }
+
+    /* ========================================
+       PHASE 7C: POPULAR RESOURCES SIDEBAR
+       ======================================== */
+    .popular-resources-list a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--slate);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-light);
+      transition: color var(--transition-fast);
+    }
+
+    .popular-resources-list a:last-child {
+      border-bottom: none;
+    }
+
+    .popular-resources-list a:hover {
+      color: var(--red);
+    }
+
+    .popular-resources-list svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
        PHASE 4: CTA BANNER
        ======================================== */
     .cta-banner {
@@ -4676,5 +4759,14 @@
 
       .share-buttons {
         flex-wrap: wrap;
+      }
+
+      .prev-next-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .prev-next-link.next {
+        text-align: left;
+        align-items: flex-start;
       }
     }

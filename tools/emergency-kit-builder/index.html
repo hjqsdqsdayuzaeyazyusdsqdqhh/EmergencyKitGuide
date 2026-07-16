@@ -1,0 +1,905 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your Emergency Kit — Interactive Checklist Builder | EmergencyKitHQ</title>
+  <meta name="description" content="Create a personalized emergency kit checklist in seconds. Select your emergency type, household size, and priority level to generate a custom, printable survival kit list.">
+  <meta name="keywords" content="emergency kit builder, survival kit checklist, emergency preparedness tool, custom emergency kit, disaster kit maker">
+  <link rel="canonical" href="https://emergencykithq.online/tools/emergency-kit-builder/">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Build Your Emergency Kit — Interactive Checklist Builder | EmergencyKitHQ">
+  <meta property="og:description" content="Create a personalized emergency kit checklist in seconds. Select your emergency type, household size, and priority level to generate a custom, printable survival kit list.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emergencykithq.online/tools/emergency-kit-builder/">
+  <meta property="og:site_name" content="EmergencyKitHQ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Build Your Emergency Kit — Interactive Checklist Builder | EmergencyKitHQ">
+  <meta name="twitter:description" content="Create a personalized emergency kit checklist in seconds. Select your emergency type, household size, and priority level to generate a custom, printable survival kit list.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* ========================================
+       BUILDER COMPONENTS
+       ======================================== */
+    .page-hero {
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+    .page-hero h1 {
+      color: #FFFFFF;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      margin: 0 0 16px 0;
+    }
+    .page-hero p {
+      color: #94A3B8;
+      font-size: 1.125rem;
+      max-width: 640px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .builder-container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* Step Indicators */
+    .step-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 9999px;
+      background: #1E293B;
+      border: 2px solid #334155;
+      color: #64748B;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .step-indicator.active {
+      background: #DC2626;
+      border-color: #DC2626;
+      color: #FFFFFF;
+    }
+    .step-indicator.completed {
+      background: #16A34A;
+      border-color: #16A34A;
+      color: #FFFFFF;
+    }
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .step-indicator.active .step-number,
+    .step-indicator.completed .step-number {
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* Builder Steps */
+    .builder-step {
+      background: #1E293B;
+      border-radius: 16px;
+      padding: 40px 32px;
+      border: 1px solid #334155;
+    }
+    .builder-step h2 {
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+    }
+    .builder-step > p {
+      color: #94A3B8;
+      margin: 0 0 32px 0;
+      line-height: 1.6;
+    }
+    .builder-step-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    /* Type Cards */
+    .builder-type-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .builder-type-card {
+      background: #0F172A;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .builder-type-card:hover {
+      border-color: #64748B;
+      transform: translateY(-2px);
+    }
+    .builder-type-card.selected {
+      border-color: #DC2626;
+      background: rgba(220,38,38,0.08);
+    }
+    .builder-type-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .builder-type-name {
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .builder-type-card.selected .builder-type-name {
+      color: #DC2626;
+    }
+
+    /* Household Controls */
+    .household-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 400px;
+    }
+    .counter-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: 1px solid #334155;
+    }
+    .counter-label {
+      color: #FFFFFF;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .counter-sublabel {
+      color: #64748B;
+      font-size: 0.8rem;
+      font-weight: 400;
+      display: block;
+      margin-top: 2px;
+    }
+    .counter-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .counter-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #334155;
+      background: #1E293B;
+      color: #FFFFFF;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+    .counter-btn:hover {
+      border-color: #DC2626;
+      background: rgba(220,38,38,0.1);
+    }
+    .counter-value {
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      font-weight: 700;
+      min-width: 32px;
+      text-align: center;
+    }
+
+    /* Priority Cards */
+    .priority-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .priority-card {
+      background: #0F172A;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      padding: 28px 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .priority-card:hover {
+      border-color: #64748B;
+      transform: translateY(-2px);
+    }
+    .priority-card.selected {
+      border-color: #DC2626;
+      background: rgba(220,38,38,0.08);
+    }
+    .priority-title {
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .priority-card.selected .priority-title {
+      color: #DC2626;
+    }
+    .priority-desc {
+      color: #94A3B8;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .priority-items {
+      color: #64748B;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    /* Summary Box */
+    .builder-summary {
+      background: #0F172A;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 32px;
+      border: 1px solid #334155;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #1E293B;
+      color: #94A3B8;
+      font-size: 0.9rem;
+    }
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+    .summary-label {
+      font-weight: 600;
+      color: #64748B;
+    }
+    .summary-value {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    /* Generate Button */
+    .btn-generate {
+      background: #DC2626;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 12px;
+      padding: 18px 40px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    .btn-generate:hover {
+      background: #B91C1C;
+      transform: translateY(-2px);
+    }
+
+    /* Result Section */
+    #resultSection {
+      display: none;
+      margin-top: 48px;
+    }
+    .builder-result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .builder-result-title {
+      color: #FFFFFF;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .builder-result-meta {
+      display: flex;
+      gap: 16px;
+      color: #94A3B8;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .builder-progress-bar-wrap {
+      background: #1E293B;
+      border-radius: 8px;
+      height: 12px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .builder-progress-bar {
+      background: #16A34A;
+      height: 100%;
+      border-radius: 8px;
+      transition: width 0.4s ease;
+    }
+
+    /* Category Grouping */
+    .builder-category {
+      margin-bottom: 28px;
+    }
+    .builder-category-title {
+      color: #DC2626;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 12px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #334155;
+    }
+
+    /* Checklist Items */
+    .builder-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #0F172A;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid #1E293B;
+    }
+    .builder-item:hover {
+      background: #1E293B;
+    }
+    .builder-item.checked {
+      opacity: 0.6;
+    }
+    .builder-item.checked .builder-item-name {
+      text-decoration: line-through;
+      color: #64748B;
+    }
+    .builder-checkbox {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid #334155;
+      background: transparent;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      flex-shrink: 0;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .builder-checkbox:checked {
+      background: #16A34A;
+      border-color: #16A34A;
+    }
+    .builder-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      width: 5px;
+      height: 10px;
+      border: solid #FFFFFF;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .builder-checkmark {
+      display: none;
+    }
+    .builder-item-name {
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* Action Buttons */
+    .builder-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .builder-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1E293B;
+      color: #FFFFFF;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .builder-action-btn:hover {
+      border-color: #DC2626;
+      background: rgba(220,38,38,0.08);
+    }
+    .builder-action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Print styles */
+    @media print {
+      .page-hero, .builder-step-nav, .builder-actions, .builder-container > .builder-step, .step-indicators,
+      .related-section, .newsletter-section, .footer, .mobile-header { display: none !important; }
+      #resultSection { display: block !important; margin: 0; }
+      .builder-result-header { page-break-after: avoid; }
+      .builder-category { page-break-inside: avoid; }
+      .builder-item { border: 1px solid #ccc; }
+      body { background: #fff; color: #000; }
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .builder-container { padding: 32px 16px 60px; }
+      .builder-step { padding: 28px 20px; }
+      .builder-type-grid { grid-template-columns: repeat(2, 1fr); }
+      .priority-grid { grid-template-columns: 1fr; }
+      .builder-result-header { flex-direction: column; align-items: flex-start; }
+      .builder-actions { flex-direction: column; }
+      .builder-action-btn { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .builder-type-grid { grid-template-columns: 1fr; }
+      .step-indicators { gap: 6px; }
+      .step-indicator { padding: 8px 12px; font-size: 0.8rem; }
+      .step-number { width: 20px; height: 20px; font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="/" class="header-logo">
+        <div class="header-logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <div class="header-logo-text">EmergencyKit<span class="header-logo-accent">Guide</span></div>
+          <div class="header-logo-tagline">Prepare. Survive. Thrive.</div>
+        </div>
+      </a>
+      <nav class="header-nav">
+        <a href="/guides/" class="header-nav-link">Guides</a>
+        <a href="/checklists/" class="header-nav-link">Checklists</a>
+        <a href="/tools/emergency-kit-builder/" class="header-nav-link header-nav-active">Kit Builder</a>
+        <a href="/editorial/" class="header-nav-link">Editorial</a>
+        <a href="/reviews/" class="header-nav-link">Reviews</a>
+        <a href="/blog/" class="header-nav-link">Blog</a>
+      </nav>
+      <a href="https://www.catrunlu.com/5LLufo4FjTH8IAnydMHUmIkUtq82Ou10Y7fYzVH07a_d3WtUW9JOdFSycvlYghTXUTXJAyht43n9GfY5qdDoEA~~/1se" class="header-cta" target="_blank" rel="nofollow sponsored noopener">Get Your Kit</a>
+      <button class="header-search-btn" id="headerSearchBtn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="header-mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <nav class="mobile-nav">
+        <a href="/guides/" class="mobile-nav-link">Guides</a>
+        <a href="/checklists/" class="mobile-nav-link">Checklists</a>
+        <a href="/tools/emergency-kit-builder/" class="mobile-nav-link mobile-nav-active">Kit Builder</a>
+        <a href="/editorial/" class="mobile-nav-link">Editorial</a>
+        <a href="/reviews/" class="mobile-nav-link">Reviews</a>
+        <a href="/blog/" class="mobile-nav-link">Blog</a>
+      </nav>
+      <a href="https://www.catrunlu.com/5LLufo4FjTH8IAnydMHUmIkUtq82Ou10Y7fYzVH07a_d3WtUW9JOdFSycvlYghTXUTXJAyht43n9GfY5qdDoEA~~/1se" class="mobile-cta" target="_blank" rel="nofollow sponsored noopener">Get Your Kit</a>
+    </div>
+  </header>
+
+  <!-- Search Overlay -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay-inner">
+      <div class="search-overlay-header">
+        <span class="search-overlay-title">Search EmergencyKitGuide</span>
+        <button class="search-overlay-close" id="searchClose" aria-label="Close search">&times;</button>
+      </div>
+      <div class="search-overlay-input-wrap">
+        <svg class="search-overlay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-overlay-input" id="searchOverlayInput" placeholder="Search guides, checklists, tips..." autocomplete="off">
+      </div>
+      <div class="search-overlay-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="breadcrumb-container">
+      <a href="/" class="breadcrumb-link">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Emergency Kit Builder</span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <h1>Build Your Emergency Kit</h1>
+    <p>Create a personalized emergency kit checklist in seconds. Select your emergency type, household size, and priority level to generate a custom, printable survival kit list.</p>
+  </section>
+
+  <!-- Builder -->
+  <main class="builder-container">
+
+    <!-- Step Indicators -->
+    <div class="step-indicators" id="builderSteps">
+      <div class="step-indicator active" data-step="1">
+        <span class="step-number">1</span> Type
+      </div>
+      <div class="step-indicator" data-step="2">
+        <span class="step-number">2</span> Household
+      </div>
+      <div class="step-indicator" data-step="3">
+        <span class="step-number">3</span> Priority
+      </div>
+      <div class="step-indicator" data-step="4">
+        <span class="step-number">4</span> Review
+      </div>
+    </div>
+
+    <!-- Step 1: Emergency Type -->
+    <div class="builder-step" id="step1">
+      <h2>What are you preparing for?</h2>
+      <p>Select the primary emergency scenario you want to prepare for. This determines which items are included in your checklist.</p>
+      <div class="builder-type-grid">
+        <div class="builder-type-card" data-type="car">
+          <span class="builder-type-icon">\uD83D\uDE97</span>
+          <span class="builder-type-name">Car Emergency</span>
+        </div>
+        <div class="builder-type-card" data-type="home">
+          <span class="builder-type-icon">\uD83C\uDFE0</span>
+          <span class="builder-type-name">Home Emergency</span>
+        </div>
+        <div class="builder-type-card" data-type="power">
+          <span class="builder-type-icon">\u26A1</span>
+          <span class="builder-type-name">Power Outage</span>
+        </div>
+        <div class="builder-type-card" data-type="winter">
+          <span class="builder-type-icon">\u2744\uFE0F</span>
+          <span class="builder-type-name">Winter Storm</span>
+        </div>
+        <div class="builder-type-card" data-type="storm">
+          <span class="builder-type-icon">\uD83C\uDF2A\uFE0F</span>
+          <span class="builder-type-name">Severe Storm</span>
+        </div>
+        <div class="builder-type-card" data-type="fire">
+          <span class="builder-type-icon">\uD83D\uDD25</span>
+          <span class="builder-type-name">Fire Emergency</span>
+        </div>
+        <div class="builder-type-card" data-type="travel">
+          <span class="builder-type-icon">\u2708\uFE0F</span>
+          <span class="builder-type-name">Travel</span>
+        </div>
+        <div class="builder-type-card" data-type="bugout">
+          <span class="builder-type-icon">\uD83C\uDF92</span>
+          <span class="builder-type-name">Bug Out Bag</span>
+        </div>
+      </div>
+      <div class="builder-step-nav">
+        <div></div>
+        <button class="btn btn-primary" id="nextStep1">Next: Household &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Household Size -->
+    <div class="builder-step" id="step2" style="display:none">
+      <h2>Who is in your household?</h2>
+      <p>We'll adjust item quantities based on the number of people and pets in your household. Recommended quantities are based on emergency preparedness guidelines.</p>
+      <div class="household-controls">
+        <div class="counter-row">
+          <div>
+            <span class="counter-label">Adults</span>
+            <span class="counter-sublabel">Ages 13+</span>
+          </div>
+          <div class="counter-controls">
+            <button class="counter-btn counter-minus" aria-label="Decrease adults">&minus;</button>
+            <span class="counter-value" id="adults">1</span>
+            <button class="counter-btn counter-plus" aria-label="Increase adults">+</button>
+          </div>
+        </div>
+        <div class="counter-row">
+          <div>
+            <span class="counter-label">Children</span>
+            <span class="counter-sublabel">Ages 0-12</span>
+          </div>
+          <div class="counter-controls">
+            <button class="counter-btn counter-minus" aria-label="Decrease children">&minus;</button>
+            <span class="counter-value" id="children">0</span>
+            <button class="counter-btn counter-plus" aria-label="Increase children">+</button>
+          </div>
+        </div>
+        <div class="counter-row">
+          <div>
+            <span class="counter-label">Pets</span>
+            <span class="counter-sublabel">Any size</span>
+          </div>
+          <div class="counter-controls">
+            <button class="counter-btn counter-minus" aria-label="Decrease pets">&minus;</button>
+            <span class="counter-value" id="pets">0</span>
+            <button class="counter-btn counter-plus" aria-label="Increase pets">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="builder-step-nav">
+        <button class="btn btn-secondary" id="prevStep2">&larr; Back</button>
+        <button class="btn btn-primary" id="nextStep2">Next: Priority &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Priority Level -->
+    <div class="builder-step" id="step3" style="display:none">
+      <h2>How prepared do you want to be?</h2>
+      <p>Choose your preparedness level. Each tier includes all items from the previous tier plus additional supplies for greater coverage.</p>
+      <div class="priority-grid">
+        <div class="priority-card" data-priority="basic">
+          <div class="priority-title">Basic Essentials</div>
+          <div class="priority-desc">Core survival items to get you through the first 72 hours.</div>
+          <div class="priority-items">~10 items &bull; Budget-friendly</div>
+        </div>
+        <div class="priority-card" data-priority="recommended">
+          <div class="priority-title">Recommended</div>
+          <div class="priority-desc">Everything in Basic plus key extras for comfort and self-sufficiency.</div>
+          <div class="priority-items">~18 items &bull; Best value</div>
+        </div>
+        <div class="priority-card" data-priority="complete">
+          <div class="priority-title">Complete Coverage</div>
+          <div class="priority-desc">Full preparedness with professional-grade gear and long-term supplies.</div>
+          <div class="priority-items">~26 items &bull; Maximum readiness</div>
+        </div>
+      </div>
+      <div class="builder-step-nav">
+        <button class="btn btn-secondary" id="prevStep3">&larr; Back</button>
+        <button class="btn btn-primary" id="nextStep3">Next: Review &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Review & Generate -->
+    <div class="builder-step" id="step4" style="display:none">
+      <h2>Review and generate your checklist</h2>
+      <p>Confirm your selections below, then generate your personalized emergency kit checklist.</p>
+      <div class="builder-summary">
+        <div class="summary-row">
+          <span class="summary-label">Emergency Type</span>
+          <span class="summary-value" id="summaryType">Not selected</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Household</span>
+          <span class="summary-value" id="summaryHousehold">Not set</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Priority Level</span>
+          <span class="summary-value" id="summaryPriority">Recommended</span>
+        </div>
+      </div>
+      <button class="btn-generate" id="generateBtn">Generate My Kit Checklist</button>
+      <div class="builder-step-nav">
+        <button class="btn btn-secondary" id="prevStep4">&larr; Back</button>
+        <div></div>
+      </div>
+    </div>
+
+    <!-- Result Section -->
+    <section id="resultSection">
+      <div id="resultContainer"></div>
+    </section>
+
+  </main>
+
+  <!-- Related Guides -->
+  <section class="related-section">
+    <div class="related-container">
+      <h2 class="related-title">Detailed Emergency Guides</h2>
+      <div class="related-grid">
+        <a href="/guides/car-emergency-kit/" class="related-card">
+          <div class="related-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h3 class="related-card-title">Car Emergency Kit</h3>
+          <p class="related-card-desc">Complete guide to building a vehicle emergency kit.</p>
+        </a>
+        <a href="/guides/home-emergency-kit/" class="related-card">
+          <div class="related-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <h3 class="related-card-title">Home Emergency Kit</h3>
+          <p class="related-card-desc">Prepare your home and family for any disaster.</p>
+        </a>
+        <a href="/guides/survival-gear-essentials/" class="related-card">
+          <div class="related-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h3 class="related-card-title">Survival Gear Essentials</h3>
+          <p class="related-card-desc">Top-rated survival gear for every emergency scenario.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="newsletter-section">
+    <div class="newsletter-container">
+      <h2 class="newsletter-title">Stay Prepared. Stay Updated.</h2>
+      <p class="newsletter-desc">Join thousands of preparedness-minded people. Get weekly tips, gear reviews, and emergency alerts delivered to your inbox.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" class="newsletter-input" placeholder="Enter your email address" required aria-label="Email address">
+        <button type="submit" class="newsletter-btn">Subscribe Free</button>
+      </form>
+      <p class="newsletter-disclaimer">No spam, ever. Unsubscribe anytime. We respect your privacy.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="footer-logo">
+            <div class="footer-logo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div>
+              <div class="footer-logo-text">EmergencyKit<span class="footer-logo-accent">Guide</span></div>
+            </div>
+          </a>
+          <p class="footer-about">Your trusted source for emergency preparedness guides, checklists, and gear reviews. Helping families stay safe since 2024.</p>
+        </div>
+        <div class="footer-links">
+          <h4 class="footer-heading">Emergency Guides</h4>
+          <a href="/guides/car-emergency-kit/">Car Emergency Kit</a>
+          <a href="/guides/home-emergency-kit/">Home Emergency Kit</a>
+          <a href="/guides/72-hour-kit/">72-Hour Kit</a>
+          <a href="/guides/winter-car-emergency-kit/">Winter Emergency</a>
+        </div>
+        <div class="footer-links">
+          <h4 class="footer-heading">Checklists</h4>
+          <a href="/checklists/car/">Car Checklist</a>
+          <a href="/checklists/home/">Home Checklist</a>
+          <a href="/checklists/winter-storm/">Winter Storm</a>
+          <a href="/checklists/power-outage/">Power Outage</a>
+        </div>
+        <div class="footer-links">
+          <h4 class="footer-heading">Resources</h4>
+          <a href="/tools/emergency-kit-builder/">Kit Builder Tool</a>
+          <a href="/editorial/">Editorial</a>
+          <a href="/reviews/">Gear Reviews</a>
+          <a href="/blog/">Blog</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">&copy; 2024 EmergencyKitHQ. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/privacy-policy/">Privacy Policy</a>
+          <a href="/terms/">Terms of Service</a>
+              <a href="../../affiliate-disclosure/">Affiliate Disclosure</a>
+              <a href="../../disclaimer/">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Emergency Kit Builder",
+    "url": "https://emergencykithq.online/tools/emergency-kit-builder/",
+    "description": "Create a personalized emergency kit checklist. Select your emergency type, household size, and priority level to generate a custom, printable survival kit list.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "EmergencyKitHQ",
+      "url": "https://emergencykithq.online"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://emergencykithq.online/" },
+      { "@type": "ListItem", "position": 2, "name": "Emergency Kit Builder", "item": "https://emergencykithq.online/tools/emergency-kit-builder/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does the emergency kit builder work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The kit builder guides you through four simple steps: select your emergency type (car, home, winter storm, etc.), specify your household size (adults, children, pets), choose your preparedness priority level (Basic, Recommended, or Complete), and then generate a customized, printable checklist with quantities adjusted for your household."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What priority level should I choose?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Basic level includes core survival items for the first 72 hours and is budget-friendly. Recommended adds comfort and self-sufficiency items and is the most popular choice. Complete Coverage provides professional-grade gear and long-term supplies for maximum preparedness."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I print my generated checklist?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. After generating your checklist, click the 'Print Checklist' button to print it directly from your browser. You can also click 'Copy Checklist' to copy the full list to your clipboard for pasting into a document or email."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are item quantities calculated?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Quantities are calculated based on the number of adults, children, and pets you enter, using emergency preparedness guidelines. For example, water requirements are 1 gallon per adult per day, with adjusted amounts for children. The builder multiplies base quantities by your household size."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the emergency kit builder free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the Emergency Kit Builder is completely free to use with no account required. You can generate unlimited checklists, print them, and copy them to your clipboard at no cost."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Scripts -->
+  <script src="/js/site-config.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/emergency-builder.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
