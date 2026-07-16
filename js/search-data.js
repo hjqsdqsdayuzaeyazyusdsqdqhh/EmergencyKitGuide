@@ -51,5 +51,8 @@ var EKG_SEARCH_DATA = [
   { title: 'Replace Car Emergency Kit Supplies', desc: 'When and how to replace expired or degraded car emergency kit items', url: '/guides/replace-car-emergency-kit-supplies/', category: 'Guides', icon: 'car' },
   { title: 'Car Emergency Kit FAQ', desc: 'Answers to every car emergency kit question from cost to storage', url: '/guides/car-emergency-kit-faq/', category: 'Guides', icon: 'car' },
   { title: 'Power Outage Checklist', desc: 'Complete checklist for surviving blackouts with lighting, food, and safety supplies', url: '/checklists/power-outage/', category: 'Checklists', icon: 'check' },
-  { title: 'Winter Storm Checklist', desc: 'Step-by-step preparation before, during, and after winter storms', url: '/checklists/winter-storm/', category: 'Checklists', icon: 'check' }
+  { title: 'Winter Storm Checklist', desc: 'Step-by-step preparation before, during, and after winter storms', url: '/checklists/winter-storm/', category: 'Checklists', icon: 'check' },
+  { title: 'Editorial Process', desc: 'How we research, write, review, and update every guide', url: '/editorial/', category: 'About', icon: 'info' },
+  { title: 'Review Policy', desc: 'How we test, rate, and recommend emergency preparedness products', url: '/reviews/', category: 'About', icon: 'info' },
+  { title: 'Blog', desc: 'Browse all emergency preparedness guides, checklists, and resources', url: '/blog/', category: 'Guides', icon: 'info' }
 ];
