@@ -195,6 +195,8 @@
       right: 0;
       z-index: 1000;
       height: var(--header-height);
+      width: 100%;
+      overflow: hidden;
       transition: all var(--transition);
     }
 
@@ -214,6 +216,7 @@
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 32px;
+      overflow: hidden;
     }
 
     .logo {
@@ -371,6 +374,19 @@
 
     .mobile-nav a:hover {
       color: var(--navy);
+    }
+
+    .mobile-nav .mobile-cta {
+      display: none;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .mobile-nav .mobile-cta .btn {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
     }
 
     /* ========================================
@@ -3177,6 +3193,37 @@
       .checklist-action-btn {
         flex: 1;
         justify-content: center;
+      }
+    }
+
+    /* ========================================
+       RESPONSIVE — TABLET & MOBILE HEADER CTA
+       ======================================== */
+    @media (max-width: 1024px) {
+      .header-inner {
+        padding: 0 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-actions .btn-primary {
+        display: none;
+      }
+
+      .mobile-nav .mobile-cta {
+        display: block;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-nav .mobile-cta {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        padding: 0 16px;
       }
     }
 
