@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
       'use strict';
 
       // ========================================
@@ -211,7 +211,7 @@
           if (!grid || !grid.children.length) return;
           var lines = [];
           grid.querySelectorAll('.result-item').forEach(function(item) {
-            lines.push('â˜ ' + item.querySelector('span').textContent);
+            lines.push('☐ ' + item.querySelector('span').textContent);
           });
           if (lines.length === 0) return;
 
