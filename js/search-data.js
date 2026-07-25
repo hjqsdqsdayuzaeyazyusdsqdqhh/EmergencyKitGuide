@@ -57,5 +57,20 @@ var EKG_SEARCH_DATA = [
   { title: 'Privacy Policy', desc: 'How we collect, use, and protect your information', url: '/privacy-policy/', category: 'About', icon: 'info' },
   { title: 'Terms of Service', desc: 'Terms and conditions for using EmergencyKitHQ', url: '/terms/', category: 'About', icon: 'info' },
   { title: 'Affiliate Disclosure', desc: 'Our affiliate relationships and how they support our content', url: '/affiliate-disclosure/', category: 'About', icon: 'info' },
-  { title: 'Emergency Kit Builder', desc: 'Build a personalized emergency kit checklist with our interactive tool', url: '/tools/emergency-kit-builder/', category: 'Tools', icon: 'tool' }
+  { title: 'Emergency Kit Builder', desc: 'Build a personalized emergency kit checklist with our interactive tool', url: '/tools/emergency-kit-builder/', category: 'Tools', icon: 'tool' },
+  { title: 'Family 72-Hour Emergency Kit', desc: 'Complete guide to building a 72-hour kit for every family member', url: '/guides/family-72-hour-emergency-kit/', category: 'Guides', icon: 'info' },
+  { title: '72-Hour Kit for Kids', desc: 'Age-appropriate emergency supplies and comfort items for children', url: '/guides/72-hour-kit-for-kids/', category: 'Guides', icon: 'info' },
+  { title: '72-Hour Emergency Food List', desc: 'Shelf-stable food options and calorie planning for 3-day emergencies', url: '/guides/72-hour-emergency-food-list/', category: 'Guides', icon: 'info' },
+  { title: '72-Hour Water Storage Guide', desc: 'How much water to store, containers, purification, and rotation', url: '/guides/72-hour-water-storage-guide/', category: 'Guides', icon: 'info' },
+  { title: '72-Hour Kit Checklist', desc: 'Complete printable checklist for 3-day emergency preparedness', url: '/guides/72-hour-kit-checklist-pdf/', category: 'Guides', icon: 'check' },
+  { title: 'Emergency Preparedness Checklist', desc: 'Step-by-step supplies, communication plans, and disaster readiness', url: '/guides/emergency-preparedness-checklist/', category: 'Guides', icon: 'check' },
+  { title: 'Disaster Preparedness Plan', desc: 'Risk assessment, family communication plans, and evacuation routes', url: '/guides/disaster-preparedness-plan/', category: 'Guides', icon: 'info' },
+  { title: 'Home Evacuation Checklist', desc: 'What to grab, documents to save, and how to evacuate safely', url: '/guides/home-evacuation-checklist/', category: 'Guides', icon: 'check' },
+  { title: 'Emergency Supplies List', desc: 'Essential items for home preparedness covering water, food, and tools', url: '/guides/emergency-supplies-list/', category: 'Guides', icon: 'check' },
+  { title: 'Emergency Food Storage', desc: 'Beginner guide to shelf-stable foods, rotation, and calorie planning', url: '/guides/emergency-food-storage/', category: 'Guides', icon: 'info' },
+  { title: 'Smoke Alarm Maintenance', desc: 'Testing, battery replacement, placement rules, and when to replace', url: '/guides/smoke-alarm-maintenance/', category: 'Guides', icon: 'fire' },
+  { title: 'Fire Blanket Guide', desc: 'How to use, choose, and store fire blankets for kitchen safety', url: '/guides/fire-blanket-guide/', category: 'Guides', icon: 'fire' },
+  { title: 'Carbon Monoxide Detector Guide', desc: 'Placement, testing, battery schedules, and what alerts mean', url: '/guides/carbon-monoxide-detector-guide/', category: 'Guides', icon: 'fire' },
+  { title: 'Wildfire Evacuation Checklist', desc: 'Go-bag essentials, documents, pet supplies, and when to leave', url: '/guides/wildfire-evacuation-checklist/', category: 'Guides', icon: 'fire' },
+  { title: 'Apartment Emergency Plan', desc: 'Fire escape routes, supplies for small spaces, and renter safety tips', url: '/guides/apartment-emergency-plan/', category: 'Guides', icon: 'home' }
 ];
